@@ -1,4 +1,4 @@
-name: Build
+name: PR
 
 on: [pull_request]
 jobs:
@@ -11,14 +11,14 @@ jobs:
                 os: [ macos-latest, windows-latest, ubuntu-latest ]
         steps:
             - name: Clone repository
-            uses: actions/checkout@v1
+              uses: actions/checkout@v1
 
             - name: Install rust
-            uses: hecrj/setup-rust-action@v1
-            with:
+              uses: hecrj/setup-rust-action@v1
+              with:
                 rust-version: "1.43.1"
 
             - name: Build
-            env:
+              env:
                 RUST_BACKTRACE: 1
-            run: cargo build --release
+              run: cargo build --release

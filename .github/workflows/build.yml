@@ -19,26 +19,26 @@ jobs:
                 os: [ macos-latest, windows-latest, ubuntu-latest ]
         steps:
             - name: Clone repository
-            uses: actions/checkout@v1
+              uses: actions/checkout@v1
 
             - name: Install rust
-            uses: hecrj/setup-rust-action@v1
-            with:
+              uses: hecrj/setup-rust-action@v1
+              with:
                 rust-version: "1.43.1"
 
             - name: Build
-            env:
+              env:
                 RUST_BACKTRACE: 1
-            run: cargo build --release
+              run: cargo build --release
 
             - name: Release Plugin
-            uses: softprops/action-gh-release@master
-            env:
+              uses: softprops/action-gh-release@master
+              env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            with:
+              with:
                 tag_name: "release draft"
                 draft: true
                 files: |
-                target/release/libdenoflate.dylib
-                target/release/denoflate.dll
-                target/release/libdenoflate.so
+                  target/release/libdenoflate.dylib
+                  target/release/denoflate.dll
+                  target/release/libdenoflate.so
