@@ -1,0 +1,44 @@
+name: Build
+
+on:
+    push:
+        branches:
+            - master
+        paths:
+            - src/**
+            - .github/workflows/**
+            - Cargo.toml
+
+jobs:
+    build:
+        name: Build for ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
+        timeout-minutes: 60
+        strategy:
+            matrix:
+                os: [ macos-latest, windows-latest, ubuntu-latest ]
+        steps:
+            - name: Clone repository
+            uses: actions/checkout@v1
+
+            - name: Install rust
+            uses: hecrj/setup-rust-action@v1
+            with:
+                rust-version: "1.43.1"
+
+            - name: Build
+            env:
+                RUST_BACKTRACE: 1
+            run: cargo build --release
+
+            - name: Release Plugin
+            uses: softprops/action-gh-release@master
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            with:
+                tag_name: "release draft"
+                draft: true
+                files: |
+                target/release/libdenoflate.dylib
+                target/release/denoflate.dll
+                target/release/libdenoflate.so
