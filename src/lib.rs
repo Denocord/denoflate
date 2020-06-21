@@ -50,7 +50,7 @@ pub fn deno_plugin_init(iface: &mut dyn Interface) {
         DECOMPRESS = Some(DecompressWrapper::new());
     }
     iface.register_op("denoflate::push", push);
-    iface.register_op("denoflate::push_flush", push_flush);
+    iface.register_op("denoflate::flush", flush);
 }
 
 fn push(_iface: &mut dyn Interface, data: &[u8], _: &mut [ZeroCopyBuf]) -> Op {
@@ -59,7 +59,7 @@ fn push(_iface: &mut dyn Interface, data: &[u8], _: &mut [ZeroCopyBuf]) -> Op {
     Op::Sync(Vec::new().into_boxed_slice())
 }
 
-fn push_flush(_iface: &mut dyn Interface, _: &[u8], __: &mut [ZeroCopyBuf]) -> Op {
+fn flush(_iface: &mut dyn Interface, _: &[u8], __: &mut [ZeroCopyBuf]) -> Op {
     let decompresser = unsafe { DECOMPRESS.as_mut().unwrap() };
     let buf = decompresser.finish();
     let out: Vec<u8> = Vec::from(buf);

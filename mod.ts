@@ -26,7 +26,7 @@ if (typeof Deno.openPlugin === "function") {
   // @ts-ignore
   const ops = Deno.core.ops();
   const opPush = ops["denoflate::push"];
-  const opFlush = ops["denoflate::push_flush"];
+  const opFlush = ops["denoflate::flush"];
   Decompressor = new class Decompressor implements IDecompressor {
     res = null;
 
