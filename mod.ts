@@ -8,6 +8,7 @@ interface IDecompressor {
     push(buf: Uint8Array, flush?: boolean): void;
 }
 let Decompressor: IDecompressor;
+//@ts-ignore
 if (typeof Deno.openPlugin === "function") {
   const IS_DEV = false;
   let url = `https://github.com/Denocord/denoflate/releases/download/v${VERSION}`;
