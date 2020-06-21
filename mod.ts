@@ -2,13 +2,15 @@ import {
   prepare,
 } from "https://deno.land/x/plugin_prepare/mod.ts";
 
+export const VERSION = "0.1.0";
+
 interface IDecompressor {
     push(buf: Uint8Array, flush?: boolean): void;
 }
 let Decompressor: IDecompressor;
 if (typeof Deno.openPlugin === "function") {
-  const IS_DEV = true;
-  let url = "https://github.com/Denocord/denoflate/releases/download/v0.1.0";
+  const IS_DEV = false;
+  let url = `https://github.com/Denocord/denoflate/releases/download/v${VERSION}`;
   if (IS_DEV) url = `${import.meta.url}/../target/release`;
   await prepare({
     name: "denoflate",
