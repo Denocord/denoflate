@@ -5,13 +5,15 @@ import {
 export const VERSION = "0.2.0";
 
 interface IDecompressor {
-    push(buf: Uint8Array, flush?: boolean): void;
+  push(buf: Uint8Array, flush?: boolean): void;
+  reset(): void;
 }
 let Decompressor: IDecompressor;
 //@ts-ignore
 if (typeof Deno.openPlugin === "function") {
   const IS_DEV = false;
-  let url = `https://github.com/Denocord/denoflate/releases/download/v${VERSION}`;
+  let url =
+    `https://github.com/Denocord/denoflate/releases/download/v${VERSION}`;
   if (IS_DEV) url = `${import.meta.url}/../target/release`;
   await prepare({
     name: "denoflate",
@@ -38,7 +40,7 @@ if (typeof Deno.openPlugin === "function") {
 
     reset() {
       //@ts-ignore
-      Deno.core.dispatch(opReset, new Uint8Array);
+      Deno.core.dispatch(opReset, new Uint8Array());
     }
 
     push(buf: Uint8Array, flush = false) {
@@ -46,22 +48,21 @@ if (typeof Deno.openPlugin === "function") {
       Deno.core.dispatch(opPush, buf);
       if (flush) {
         //@ts-ignore
-        this.res = Deno.core.dispatch(opFlush, new Uint8Array);
+        this.res = Deno.core.dispatch(opFlush, new Uint8Array());
       }
     }
   }();
 } else {
+  const NATIVE_PLUGIN_ERROR = new Error(
+    `Native plugin couldn't be loaded because of disabled unstable APIs. Please run Deno with the --unstable flag.`,
+  );
   Decompressor = new class Decompressor implements IDecompressor {
     push(_buf: Uint8Array, _flush = false) {
-      throw new Error(
-        `Native plugin couldn't be loaded because of disabled unstable APIs. Please run Deno with the --unstable flag.`,
-      );
+      throw NATIVE_PLUGIN_ERROR;
     }
 
     reset() {
-      throw new Error(
-        `Native plugin couldn't be loaded because of disabled unstable APIs. Please run Deno with the --unstable flag.`,
-      );
+      throw NATIVE_PLUGIN_ERROR;
     }
   }();
 }
