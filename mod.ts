@@ -2,7 +2,7 @@ import {
   prepare,
 } from "https://raw.githubusercontent.com/Denocord/deno-plugin-prepare/43a1d853b14ec6710ce252a95b4a6be466643b7a/mod.ts";
 
-export const VERSION = "0.2.0";
+export const VERSION = "0.3.0";
 
 interface IDecompressor {
   push(buf: Uint8Array, flush?: boolean): void;
