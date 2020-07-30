@@ -54,7 +54,7 @@ pub fn deno_plugin_init(iface: &mut dyn Interface) {
     iface.register_op("denoflate::reset", reset);
 }
 
-fn reset(___: &mut dyn Interface, __: &[u8], _: &mut [ZeroCopyBuf]) -> Op {
+fn reset(___: &mut dyn Interface, _: &mut [ZeroCopyBuf]) -> Op {
     unsafe {
         DECOMPRESS = Some(DecompressWrapper::new());
     }
@@ -62,13 +62,14 @@ fn reset(___: &mut dyn Interface, __: &[u8], _: &mut [ZeroCopyBuf]) -> Op {
     Op::Sync(Vec::new().into_boxed_slice())
 }
 
-fn push(_iface: &mut dyn Interface, data: &[u8], _: &mut [ZeroCopyBuf]) -> Op {
+fn push(_iface: &mut dyn Interface, data: &mut [ZeroCopyBuf]) -> Op {
     let decompresser = unsafe { DECOMPRESS.as_mut().unwrap() };
-    decompresser.write(data);
+    let true_data = &data[0];
+    decompresser.write(true_data);
     Op::Sync(Vec::new().into_boxed_slice())
 }
 
-fn flush(_iface: &mut dyn Interface, _: &[u8], __: &mut [ZeroCopyBuf]) -> Op {
+fn flush(_iface: &mut dyn Interface, _: &mut [ZeroCopyBuf]) -> Op {
     let decompresser = unsafe { DECOMPRESS.as_mut().unwrap() };
     let buf = decompresser.finish();
     let out: Vec<u8> = Vec::from(buf);
