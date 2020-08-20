@@ -3,7 +3,7 @@ import {
 } from "https://raw.githubusercontent.com/Denocord/deno-plugin-prepare/528acc01d5c8468ea29db7638957461c498427a0/mod.ts";
 
 export const VERSION = "0.3.0";
-export const IS_DEV = true;
+export const IS_DEV = false;
 
 interface IDecompressor {
   push(buf: Uint8Array, flush?: boolean): void;
