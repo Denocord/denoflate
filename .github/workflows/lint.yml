@@ -21,6 +21,6 @@ jobs:
               with:
                 args: '["--version"]'
             - name: Lint
-              uses: Denocord/deno-action@v1
+              uses: Denocord/deno-action@master
               with:
                 args: '["fmt", "mod.ts"]'
