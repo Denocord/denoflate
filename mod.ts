@@ -3,7 +3,7 @@ import {
 } from "https://raw.githubusercontent.com/Denocord/deno-plugin-prepare/528acc01d5c8468ea29db7638957461c498427a0/mod.ts";
 
 export const VERSION = "0.3.0";
-export const IS_DEV = false;
+export const IS_DEV = true;
 
 interface IDecompressor {
   push(buf: Uint8Array, flush?: boolean): void;
@@ -14,9 +14,9 @@ let Decompressor: IDecompressor;
 
 //@ts-ignore
 if (typeof Deno.openPlugin === "function") {
-  let url =
+  let url = IS_DEV ?
+    `${import.meta.url}/../target/release` :
     `https://github.com/Denocord/denoflate/releases/download/v${VERSION}`;
-  if (IS_DEV) url = `${import.meta.url}/../target/release`;
 
   await prepare({
     name: "denoflate",
