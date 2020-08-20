@@ -1,6 +1,6 @@
 [package]
 name = "denoflate"
-version = "0.4.0"
+version = "0.4.1"
 authors = ["TTtie <tttiett@outlook.com>"]
 edition = "2018"
 
@@ -11,4 +11,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 inflate = { git = "https://github.com/Denocord/inflate.git" }
-deno_core = "0.50.0"
+deno_core = "0.53.0"
