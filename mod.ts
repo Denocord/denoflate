@@ -34,10 +34,6 @@ if (typeof Deno.openPlugin === "function") {
   Decompressor = new class Decompressor implements IDecompressor {
     res = null;
 
-    constructor() {
-      this.reset();
-    }
-
     reset() {
       //@ts-ignore
       Deno.core.dispatch(opReset, new Uint8Array());
