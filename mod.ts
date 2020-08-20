@@ -8,7 +8,9 @@ interface IDecompressor {
   push(buf: Uint8Array, flush?: boolean): void;
   reset(): void;
 }
+
 let Decompressor: IDecompressor;
+
 //@ts-ignore
 if (typeof Deno.openPlugin === "function") {
   const IS_DEV = false;
@@ -50,16 +52,16 @@ if (typeof Deno.openPlugin === "function") {
   }();
 } else {
   const NATIVE_PLUGIN_ERROR = new Error(
-    `Native plugin couldn't be loaded because of disabled unstable APIs. Please run Deno with the --unstable flag.`,
+    `The native plugin couldn't be loaded because of disabled unstable APIs. Please run Deno again with the --unstable flag.`,
   );
-  Decompressor = new class Decompressor implements IDecompressor {
+  Decompressor = {
     push(_buf: Uint8Array, _flush = false) {
       throw NATIVE_PLUGIN_ERROR;
-    }
+    },
 
     reset() {
       throw NATIVE_PLUGIN_ERROR;
     }
-  }();
+  };
 }
 export default Decompressor;
