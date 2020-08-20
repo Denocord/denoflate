@@ -19,8 +19,8 @@ jobs:
             - name: Show deno version
               uses: Denocord/deno-action@v1
               with:
-                args: ["--version"]
+                args: '["--version"]'
             - name: Lint
               uses: Denocord/deno-action@v1
               with:
-                args: ["fmt", "mod.ts"]
+                args: '["fmt", "mod.ts"]'
