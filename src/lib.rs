@@ -22,8 +22,7 @@ fn reset(_: &mut dyn Interface, _: &mut [ZeroCopyBuf]) -> Op {
 }
 
 fn push(_: &mut dyn Interface, data: &mut [ZeroCopyBuf]) -> Op {
-    let true_data = &data[0];
-    DECOMPRESS.with(|d| d.lock().unwrap().write(true_data).unwrap());
+    DECOMPRESS.with(|d| d.lock().unwrap().write(&data[0]).unwrap());
     Op::Sync(Vec::new().into_boxed_slice())
 }
 
