@@ -41,16 +41,20 @@ jobs:
                 path: target
                 key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.toml') }}
       
-            - name: remove gn root
+            - name: remove gn out
               if: matrix.os == 'windows-latest'
               run: |
-                rm target/release/gn_root -Recurse -ErrorAction Ignore
-                rm target/debug/gn_root -Recurse -ErrorAction Ignore
+                rm target/release/gn_out -Recurse -ErrorAction Ignore
+                rm target/debug/gn_out -Recurse -ErrorAction Ignore
 
             - name: Build
               env:
                 RUST_BACKTRACE: 1
               run: cargo build --release
+
+            - name: Strip debug symbols
+              if: matrix.os != 'windows-latest'
+              run: strip target/release/libdenoflate.so
 
             - name: Release Plugin
               uses: softprops/action-gh-release@master
