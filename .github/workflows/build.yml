@@ -53,7 +53,7 @@ jobs:
               run: cargo build --release
 
             - name: Strip debug symbols
-              if: runner.os != 'windows-latest'
+              if: matrix.config.os != 'windows-latest'
               run: |
                 STRIPOPTS=""
                 if uname | grep -qi "darwin"; then
