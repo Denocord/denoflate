@@ -11,7 +11,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 inflate = { git = "https://github.com/Denocord/inflate.git#db03fd4d23a38da5fd64b93855ec990949278fbb" }
-deno_core = "0.53.0"
+deno_core = "0.54.0"
 
 [profile.release]
 lto = true
