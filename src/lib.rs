@@ -18,12 +18,12 @@ pub fn deno_plugin_init(iface: &mut dyn Interface) {
 
 fn reset(_: &mut dyn Interface, _: &mut [ZeroCopyBuf]) -> Op {
     DECOMPRESS.with(|d| d.lock().unwrap().reset());
-    Op::Sync(Vec::new().into_boxed_slice())
+    Op::Sync(vec![].into_boxed_slice())
 }
 
 fn push(_: &mut dyn Interface, data: &mut [ZeroCopyBuf]) -> Op {
     DECOMPRESS.with(|d| d.lock().unwrap().write(&data[0]).unwrap());
-    Op::Sync(Vec::new().into_boxed_slice())
+    Op::Sync(vec![].into_boxed_slice())
 }
 
 fn flush(_: &mut dyn Interface, _: &mut [ZeroCopyBuf]) -> Op {
