@@ -54,7 +54,12 @@ jobs:
 
             - name: Strip debug symbols
               if: matrix.os != 'windows-latest'
-              run: strip target/release/libdenoflate.so
+              run: |
+                FILEEXT="so"
+                if uname | grep -qi "darwin"; then
+                  FILEEXT="dylib"
+                fi
+                strip target/release/libdenoflate.$FILEEXT
 
             - name: Release Plugin
               uses: softprops/action-gh-release@master
