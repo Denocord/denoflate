@@ -56,10 +56,12 @@ jobs:
               if: matrix.os != 'windows-latest'
               run: |
                 FILEEXT="so"
+                STRIPOPTS=""
                 if uname | grep -qi "darwin"; then
                   FILEEXT="dylib"
+                  STRIPOPTS="-x"
                 fi
-                strip target/release/libdenoflate.$FILEEXT
+                strip $STRIPOPTS target/release/libdenoflate.$FILEEXT
 
             - name: Release Plugin
               uses: softprops/action-gh-release@master
