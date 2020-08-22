@@ -11,12 +11,18 @@ on:
 
 jobs:
     build:
-        name: Build for ${{ matrix.os }}
-        runs-on: ${{ matrix.os }}
+        name: Build for ${{ matrix.config.os }}
+        runs-on: ${{ matrix.config.os }}
         timeout-minutes: 60
         strategy:
             matrix:
-                os: [ macos-latest, windows-latest, ubuntu-latest ]
+              config:
+                - os: macos-latest
+                  filename: libdenoflate.dylib
+                - os: windows-latest
+                  filename: denoflate.dll
+                - os: ubuntu-latest
+                  filename: libdenoflate.so
         steps:
             - name: Clone repository
               uses: actions/checkout@v1
@@ -47,24 +53,28 @@ jobs:
               run: cargo build --release
 
             - name: Strip debug symbols
-              if: matrix.os != 'windows-latest'
+              if: runner.os != 'windows-latest'
               run: |
-                FILEEXT="so"
                 STRIPOPTS=""
                 if uname | grep -qi "darwin"; then
-                  FILEEXT="dylib"
                   STRIPOPTS="-x"
                 fi
-                strip $STRIPOPTS target/release/libdenoflate.$FILEEXT
-
-            - name: Release Plugin
-              uses: softprops/action-gh-release@master
+                strip $STRIPOPTS target/release/${{ matrix.config.filename }}
+            - name: Create a release
+              id: create_release
+              uses: actions/create-release@v1
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                tag_name: "release draft"
+                tag_name: "release draft for ${{ github.ref }}"
                 draft: true
-                files: |
-                  target/release/libdenoflate.dylib
-                  target/release/denoflate.dll
-                  target/release/libdenoflate.so
+            - name: Upload Release Asset
+            id: upload-release-asset 
+            uses: actions/upload-release-asset@v1
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            with:
+              upload_url: ${{ steps.create_release.outputs.upload_url }}
+              asset_path: ./target/release/${{ matrix.os.filename }}
+              asset_name: ${{ matrix.os.filename }}
+              asset_content_type: application/octet-stream
