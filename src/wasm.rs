@@ -1,11 +1,11 @@
 use std::io::prelude::*;
 
-use wasm_bindgen::prelude::*;
 use inflate::InflateWriter;
+use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub struct Decompressor {
-    inflate: InflateWriter<Vec<u8>>
+    inflate: InflateWriter<Vec<u8>>,
 }
 
 #[wasm_bindgen]
@@ -13,7 +13,7 @@ impl Decompressor {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
         Self {
-            inflate: InflateWriter::from_zlib(vec![])
+            inflate: InflateWriter::from_zlib(vec![]),
         }
     }
 
