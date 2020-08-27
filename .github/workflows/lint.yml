@@ -4,6 +4,7 @@ on:
     push:
         paths:
             - mod.ts
+    pull_request:
 
 jobs:
     build:
