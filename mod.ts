@@ -61,11 +61,17 @@ export async function getDecompressor(FORCE_WASM = false) {
 
     //@ts-ignore
     const native = await import("./pkg/denoflate.js");
-    await native.default(import.meta.url.startsWith("file://") ?
-      Deno.readFile(new URL("./pkg/denoflate_bg.wasm", import.meta.url)) :
-      undefined);
+    await native.default(
+      import.meta.url.startsWith("file://")
+        ? Deno.readFile(new URL("./pkg/denoflate_bg.wasm", import.meta.url))
+        : undefined,
+    );
 
-    if (!FORCE_WASM) console.warn("Deno unstable APIs disabled - falling back to WASM-based decompressor");
+    if (!FORCE_WASM) {
+      console.warn(
+        "Deno unstable APIs disabled - falling back to WASM-based decompressor",
+      );
+    }
     const d = new native.Decompressor();
     Decompressor = new class Decompressor implements IDecompressor {
       res = null;
@@ -82,7 +88,7 @@ export async function getDecompressor(FORCE_WASM = false) {
       reset() {
         d.reset();
       }
-    };
+    }();
   }
   return Decompressor;
 }
