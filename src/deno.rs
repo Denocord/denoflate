@@ -1,8 +1,8 @@
-use deno_core::plugin_api::{Interface, ZeroCopyBuf, Op};
-use inflate::InflateWriter;
-
 use std::io::prelude::*;
 use std::cell::RefCell;
+
+use deno_core::plugin_api::{Interface, ZeroCopyBuf, Op};
+use inflate::InflateWriter;
 
 thread_local! {
     static DECOMPRESS: RefCell<InflateWriter<Vec<u8>>> = 

@@ -1,7 +1,7 @@
+use std::io::prelude::*;
+
 use wasm_bindgen::prelude::*;
 use inflate::InflateWriter;
-
-use std::io::prelude::*;
 
 #[wasm_bindgen]
 pub struct Decompressor {
