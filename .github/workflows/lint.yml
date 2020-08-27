@@ -2,8 +2,6 @@ name: Code Quality - TypeScript
 
 on:
     push:
-        branches:
-            - master
         paths:
             - mod.ts
 
