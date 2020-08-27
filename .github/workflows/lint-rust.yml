@@ -1,0 +1,29 @@
+name: Code Quality - Rust
+
+on:
+    push:
+        branches:
+            - master
+        paths:
+            - src/**
+            - .github/workflows/**
+            - Cargo.toml
+    pull_request:
+        paths:
+            - src/**
+            - .github/workflows/**
+            - Cargo.toml
+
+jobs:
+    build:
+        name: Linting
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Clone repository
+              uses: actions/checkout@v2
+            - name: Install rust
+              uses: hecrj/setup-rust-action@v1
+            - run: |
+                rustup component add rustfmt
+                ./tools/rustfmt.sh --check
