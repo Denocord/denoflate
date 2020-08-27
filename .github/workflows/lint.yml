@@ -5,6 +5,8 @@ on:
         paths:
             - mod.ts
     pull_request:
+        paths:
+            - mod.ts
 
 jobs:
     build:
