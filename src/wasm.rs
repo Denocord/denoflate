@@ -13,12 +13,12 @@ impl Decompressor {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
         Self {
-            inflate: InflateWriter::from_zlib(Vec::new())
+            inflate: InflateWriter::from_zlib(vec![])
         }
     }
 
     pub fn reset(&mut self) {
-        self.inflate = InflateWriter::from_zlib(Vec::new());
+        self.inflate = InflateWriter::from_zlib(vec![]);
     }
 
     pub fn push(&mut self, data: Vec<u8>) {
