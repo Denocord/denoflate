@@ -60,4 +60,9 @@ jobs:
             - name: Build
               env:
                 RUST_BACKTRACE: 1
-              run: wasm-pack build --release --target web # TODO(TTtie): once --target deno is available, rewrite to --target deno
+              run: wasm-pack build --release --target web 
+
+            - name: Pack WASM for distribution
+              uses: Denocord/deno-action@master
+              with:
+                  args: '["run", "--allow-read", "--allow-write", "dist-tools/pack-wasm.ts"]'

@@ -4,9 +4,11 @@ on:
     push:
         paths:
             - mod.ts
+            - dist-tools/**
     pull_request:
         paths:
             - mod.ts
+            - dist-tools/**
 
 jobs:
     build:
@@ -19,4 +21,4 @@ jobs:
             - name: Lint
               uses: Denocord/deno-action@master
               with:
-                args: '["fmt", "--check", "mod.ts"]'
+                args: '["fmt", "--check", "mod.ts", "dist-tools/"]'

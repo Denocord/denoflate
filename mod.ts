@@ -4,7 +4,6 @@ import {
 
 export const VERSION = "0.6.0";
 export const IS_DEV = true;
-let decompressor = await getDecompressor();
 
 interface IDecompressor {
   wasm: boolean;
@@ -13,15 +12,19 @@ interface IDecompressor {
   reset(): void;
 }
 
-export async function getDecompressor(FORCE_WASM = false) {
+let url = IS_DEV
+  ? `${import.meta.url}/../target/release`
+  : `https://github.com/Denocord/denoflate/releases/download/v${VERSION}`;
+let wasmUrl = IS_DEV
+  ? `${import.meta.url}/..`
+  : url;
+
+const decompressor = await getDecompressor();
+export async function getDecompressor(FORCE_WASM = false): Promise<IDecompressor> {
   let Decompressor: IDecompressor;
 
   //@ts-ignore
   if (typeof Deno.openPlugin === "function" && !FORCE_WASM) {
-    let url = IS_DEV
-      ? `${import.meta.url}/../target/release`
-      : `https://github.com/Denocord/denoflate/releases/download/v${VERSION}`;
-
     try {
       await prepare({
         name: "denoflate",
@@ -64,19 +67,15 @@ export async function getDecompressor(FORCE_WASM = false) {
     //TODO(TTtie): How to deliver WASM?
 
     //@ts-ignore
-    const native = await import("./pkg/denoflate.js");
-    await native.default(
-      import.meta.url.startsWith("file://")
-        ? Deno.readFile(new URL("./pkg/denoflate_bg.wasm", import.meta.url))
-        : undefined,
-    );
+    const wasm = await import(`${wasmUrl}/wasm.js`);
+    await wasm.default(wasm.source);
 
     if (!FORCE_WASM) {
       console.warn(
         "Deno unstable APIs disabled - falling back to WASM-based decompressor",
       );
     }
-    const d = new native.Decompressor();
+    const d = new wasm.Decompressor();
     Decompressor = new class Decompressor implements IDecompressor {
       res = null;
       wasm = true;
