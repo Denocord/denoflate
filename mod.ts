@@ -2,13 +2,36 @@ import {
   prepare,
 } from "https://raw.githubusercontent.com/Denocord/deno-plugin-prepare/528acc01d5c8468ea29db7638957461c498427a0/mod.ts";
 
+/**
+ * The native plugin version
+ */
 export const VERSION = "0.6.0";
+/**
+ * Controls whether to load the development versions of the library
+ */
 export const IS_DEV = true;
 
+/**
+ * Represents a decompressor
+ */
 interface IDecompressor {
+  /**
+   * Determines whether the WASM-based decompressor is loaded
+   */
   wasm: boolean;
+  /**
+   * Decompressed output
+   */
   res: Uint8Array | null;
+  /**
+   * Pushes binary data into the decompressor
+   * @param buf The compressed data
+   * @param flush Determines whether to flush data to the decompressor
+   */
   push(buf: Uint8Array, flush?: boolean): void;
+  /**
+   * Resets the decompression context
+   */
   reset(): void;
 }
 
@@ -18,6 +41,11 @@ let url = IS_DEV
 let wasmUrl = IS_DEV ? `${import.meta.url}/..` : url;
 
 const decompressor = await getDecompressor();
+
+/**
+ * Creates a decompressor
+ * @param FORCE_WASM Determines whether to force WASM-based decompressor. If unset or falsy, this is determined based on whether the native plugin can be loaded or not.
+ */
 export async function getDecompressor(
   FORCE_WASM = false,
 ): Promise<IDecompressor> {
@@ -37,6 +65,9 @@ export async function getDecompressor(
         },
       });
     } catch {
+      console.warn(
+        "Loading native plugin failed - falling back to WASM-based decompressor",
+      );
       return await getDecompressor(true);
     }
 
@@ -94,4 +125,7 @@ export async function getDecompressor(
   return Decompressor;
 }
 
+/**
+ * The default decompression context
+ */
 export default decompressor;
