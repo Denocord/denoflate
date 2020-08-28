@@ -11,5 +11,5 @@ import decompressor from "https://raw.githubusercontent.com/Denocord/denoflate/m
 decompressor.push(buf);
 // on last chunk
 decompressor.push(buf, true);
-const decompressedBuf = Decompressor.res;
+const decompressedBuf = decompressor.res;
 ```
