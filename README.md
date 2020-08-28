@@ -1,4 +1,4 @@
-# denoflate
+# denoflate [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/raw.githubusercontent.com/Denocord/denoflate/master/mod.ts)
 A simple library for handling Discord's `zlib-stream` compression, written in Rust.
 
 ## How to use
