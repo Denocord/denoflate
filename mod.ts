@@ -15,12 +15,12 @@ interface IDecompressor {
 let url = IS_DEV
   ? `${import.meta.url}/../target/release`
   : `https://github.com/Denocord/denoflate/releases/download/v${VERSION}`;
-let wasmUrl = IS_DEV
-  ? `${import.meta.url}/..`
-  : url;
+let wasmUrl = IS_DEV ? `${import.meta.url}/..` : url;
 
 const decompressor = await getDecompressor();
-export async function getDecompressor(FORCE_WASM = false): Promise<IDecompressor> {
+export async function getDecompressor(
+  FORCE_WASM = false,
+): Promise<IDecompressor> {
   let Decompressor: IDecompressor;
 
   //@ts-ignore

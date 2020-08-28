@@ -26,7 +26,6 @@ function err(text: string): never {
   return Deno.exit(1);
 }
 
-
 if (!(await Deno.stat("Cargo.toml")).isFile) {
   err(`the build script should be executed in the "${name}" root`);
 }
@@ -67,4 +66,3 @@ const outputFile = await Deno.stat("wasm.js");
 log(
   `output file ("wasm.js"), final size is: ${outputFile.size} bytes`,
 );
-
