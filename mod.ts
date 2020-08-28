@@ -64,8 +64,6 @@ export async function getDecompressor(
       }
     }();
   } else {
-    //TODO(TTtie): How to deliver WASM?
-
     //@ts-ignore
     const wasm = await import(`${wasmUrl}/wasm.js`);
     await wasm.default(wasm.source);
