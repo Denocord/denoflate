@@ -50,11 +50,11 @@ jobs:
 
             - uses: actions/cache@v2
               with:
-              path: |
-                ~/.cargo/registry
-                ~/.cargo/git
-                target
-              key: wasm-cargo-${{ hashFiles('**/Cargo.lock') }}
+                path: |
+                    ~/.cargo/registry
+                    ~/.cargo/git
+                    target
+                key: wasm-cargo-${{ hashFiles('**/Cargo.lock') }}
               name: Cache cargo files
 
             - name: Build
