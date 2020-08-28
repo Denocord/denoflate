@@ -9,7 +9,7 @@ export const VERSION = "0.6.0";
 /**
  * Controls whether to load the development versions of the library
  */
-export const IS_DEV = true;
+export const IS_DEV = false;
 
 /**
  * Represents a decompressor
