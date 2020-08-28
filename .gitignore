@@ -2,3 +2,4 @@
 Cargo.lock
 .deno_plugins
 /bench
+wasm.js
