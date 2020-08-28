@@ -2,7 +2,7 @@ import {
   prepare,
 } from "https://raw.githubusercontent.com/Denocord/deno-plugin-prepare/528acc01d5c8468ea29db7638957461c498427a0/mod.ts";
 
-export const VERSION = "0.5.0";
+export const VERSION = "0.6.0";
 export const IS_DEV = true;
 let decompressor = await getDecompressor();
 
@@ -22,16 +22,20 @@ export async function getDecompressor(FORCE_WASM = false) {
       ? `${import.meta.url}/../target/release`
       : `https://github.com/Denocord/denoflate/releases/download/v${VERSION}`;
 
-    await prepare({
-      name: "denoflate",
-      printLog: false,
-      checkCache: true,
-      urls: {
-        darwin: `${url}/libdenoflate.dylib`,
-        linux: `${url}/libdenoflate.so`,
-        windows: `${url}/denoflate.dll`,
-      },
-    });
+    try {
+      await prepare({
+        name: "denoflate",
+        printLog: false,
+        checkCache: true,
+        urls: {
+          darwin: `${url}/libdenoflate.dylib`,
+          linux: `${url}/libdenoflate.so`,
+          windows: `${url}/denoflate.dll`,
+        },
+      });
+    } catch {
+      return await getDecompressor(true);
+    }
 
     // @ts-ignore
     const ops = Deno.core.ops();
