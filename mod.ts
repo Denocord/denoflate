@@ -1,6 +1,6 @@
 import {
   prepare,
-} from "https://raw.githubusercontent.com/Denocord/deno-plugin-prepare/528acc01d5c8468ea29db7638957461c498427a0/mod.ts";
+} from "https://raw.githubusercontent.com/Denocord/deno-plugin-prepare/cca952397e77ea28e7b896e69f06ad6f778eb83d/mod.ts";
 
 /**
  * The native plugin version
