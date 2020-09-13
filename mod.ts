@@ -1,6 +1,6 @@
 import {
   Plug,
-} from "https://deno.land/x/plug@0.1.1/mod.ts";
+} from "https://deno.land/x/plug@0.2.1/mod.ts";
 
 /**
  * The native plugin version
