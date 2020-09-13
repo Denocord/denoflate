@@ -1,5 +1,5 @@
 import {
-  prepare,
+  Plug,
 } from "https://deno.land/x/plug@0.1.1/mod.ts";
 
 /**
@@ -54,10 +54,8 @@ export async function getDecompressor(
   //@ts-ignore
   if (typeof Deno.openPlugin === "function" && !FORCE_WASM) {
     try {
-      await prepare({
+      await Plug.prepare({
         name: "denoflate",
-        printLog: false,
-        checkCache: true,
         urls: {
           darwin: `${url}/libdenoflate.dylib`,
           linux: `${url}/libdenoflate.so`,
