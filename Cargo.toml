@@ -18,7 +18,7 @@ inflate = { git = "https://github.com/Denocord/inflate.git", rev = "db03fd4d23a3
 wasm-bindgen = "0.2.67"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-deno_core = "0.54.0"
+deno_core = "0.57.0"
 
 [profile.release]
 lto = true
