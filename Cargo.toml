@@ -4,15 +4,13 @@ version = "0.6.0"
 authors = ["TTtie <tttiett@outlook.com>"]
 edition = "2018"
 
-[package.metadata.wasm-pack.profile.release]
-wasm-opt = ["-O", "--enable-mutable-globals"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
-inflate = { git = "https://github.com/Denocord/inflate.git", rev = "db03fd4d23a38da5fd64b93855ec990949278fbb" }
+flate2 = { version = "1.0", features = ["zlib"] }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen = "0.2.68"
@@ -22,3 +20,4 @@ deno_core = "0.60.0"
 
 [profile.release]
 lto = true
+opt-level = 3

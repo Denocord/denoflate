@@ -60,9 +60,13 @@ jobs:
             - name: Build
               env:
                 RUST_BACKTRACE: 1
-              run: wasm-pack build --release --target web 
+              run: cargo build --release --target wasm32-wasi
+            
+            - name: Generate WASM glue
+              run: wasm-bindgen --target web target/wasm32-wasi/release/denoflate.wasm --out-dir pkg
 
             - name: Pack WASM for distribution
               uses: Denocord/deno-action@master
               with:
                   args: '["run", "--allow-read", "--allow-write", "dist-tools/pack-wasm.ts"]'
+
