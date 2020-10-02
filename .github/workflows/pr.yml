@@ -51,8 +51,7 @@ jobs:
                 rustup target add wasm32-wasi
             - run: cargo install wasm-bindgen-cli
               name: Install wasm-bindgen-cli
-            - run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
-              name: Install wasm-pack
+
 
             - uses: actions/cache@v2
               with:
