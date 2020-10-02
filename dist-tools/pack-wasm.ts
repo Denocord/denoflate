@@ -1,5 +1,6 @@
 // Taken from https://github.com/nestdotland/analyzer/blob/787660cb021617c6f7087ef6b48cf7019ee65b76/wasm/scripts/build.ts
-const WASI_BINDGEN_IMPORT = `import * as __wbg_star0 from 'wasi_snapshot_preview1';`
+const WASI_BINDGEN_IMPORT =
+  `import * as __wbg_star0 from 'wasi_snapshot_preview1';`;
 
 import { encode } from "https://deno.land/std@0.72.0/encoding/base64.ts";
 import Terser from "https://jspm.dev/terser@4.8.0";
@@ -45,7 +46,9 @@ const source =
 let init = await Deno.readTextFile(`pkg/${name}.js`);
 
 if (init.startsWith(WASI_BINDGEN_IMPORT)) {
-  init = init.replace(WASI_BINDGEN_IMPORT, `
+  init = init.replace(
+    WASI_BINDGEN_IMPORT,
+    `
 import Context from "https://deno.land/std@0.72.0/wasi/snapshot_preview1.ts";
 
 const context = new Context({
@@ -54,7 +57,8 @@ const context = new Context({
 });
 
 const __wbg_star0 = context.exports;
-`)
+`,
+  );
 }
 
 log("minifying js");

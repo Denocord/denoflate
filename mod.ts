@@ -1,7 +1,4 @@
-import {
-  Plug,
-} from "https://deno.land/x/plug@0.2.1/mod.ts";
-
+import { Plug } from "https://deno.land/x/plug@0.2.1/mod.ts";
 
 /**
  * The native plugin version
@@ -48,7 +45,7 @@ let url = IS_DEV
 let wasmUrl = IS_DEV ? `${import.meta.url}/..` : url;
 
 //@ts-expect-error
-const finalizer = new FinalizationRegistry<FinalizerHold>(held => {
+const finalizer = new FinalizationRegistry<FinalizerHold>((held) => {
   if (typeof held.resource === "number") {
     Deno.close(held.resource);
   } else {
@@ -78,7 +75,7 @@ export async function getDecompressor(
           linux: `${url}/libdenoflate.so`,
           windows: `${url}/denoflate.dll`,
         },
-        policy: IS_DEV ? Plug.CachePolicy.NONE : Plug.CachePolicy.STORE
+        policy: IS_DEV ? Plug.CachePolicy.NONE : Plug.CachePolicy.STORE,
       });
     } catch {
       console.warn(
@@ -97,7 +94,7 @@ export async function getDecompressor(
       wasm = false;
       constructor() {
         finalizer.register(this, {
-          resource: pluginResource
+          resource: pluginResource,
         }, this);
       }
 
@@ -137,7 +134,7 @@ export async function getDecompressor(
 
       constructor() {
         finalizer.register(this, {
-          resource: d
+          resource: d,
         }, this);
       }
 
