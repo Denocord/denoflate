@@ -22,8 +22,8 @@ jobs:
               uses: hecrj/setup-rust-action@v1
             - name: Set up wasm32-wasi target
               run: |
-              rustup target add wasm32-unknown-unknown
-              rustup target add wasm32-wasi
+                rustup target add wasm32-unknown-unknown
+                rustup target add wasm32-wasi
             - run: cargo install wasm-bindgen-cli
               name: Install wasm-bindgen-cli
             
