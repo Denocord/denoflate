@@ -14,6 +14,11 @@ _setDevRelease(true);
 const decompressor = IS_WASM ? await getDecompressor(true) : Decompressor;
 const td = new TextDecoder();
 
+console.log(`
+Deno v${Deno.version.deno} (running on V8 v${Deno.version.v8})
+TypeScript v${Deno.version.typescript}
+`);
+
 if (!IS_WASM) {
   Deno.test({
     name: "Native plugin loads instead of WASM",
