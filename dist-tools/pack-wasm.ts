@@ -3,7 +3,7 @@ const WASI_BINDGEN_IMPORT =
   `import * as __wbg_star0 from 'wasi_snapshot_preview1';`;
 
 import { encode } from "https://deno.land/std@0.75.0/encoding/base64.ts";
-import Terser from "https://jspm.dev/terser@4.8.0";
+import * as Terser from "https://esm.sh/terser";
 
 const name = "denoflate";
 
@@ -62,19 +62,20 @@ const __wbg_star0 = context.exports;
 }
 
 log("minifying js");
-const output = Terser.minify(`${source}\n${init}`, {
-  mangle: { module: true },
-  output: {
-    preamble: "//deno-fmt-ignore-file",
-  },
-});
-
-if (output.error) {
-  err(`encountered error when minifying: ${output.error}`);
+let output: Terser.MinifyOutput;
+try {
+  output = await Terser.minify(`${source}\n${init}`, {
+    mangle: { module: true },
+    output: {
+      preamble: "//deno-fmt-ignore-file",
+    },
+  });
+} catch (e) {
+  err(`encountered error when minifying: ${e}`);
 }
 
 const reduction = new Blob([(`${source}\n${init}`)]).size -
-  new Blob([output.code]).size;
+  new Blob([output!.code!]).size;
 log(`minified js, size reduction: ${reduction} bytes`);
 
 log(`writing output to file ("wasm.js")`);
