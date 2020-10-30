@@ -7,7 +7,15 @@ export const VERSION = "0.6.0";
 /**
  * Controls whether to load the development versions of the library
  */
-export const IS_DEV = true;
+export let IS_DEV = true;
+
+/**
+ * Sets whether to load the development version of the library or not. Should NEVER be used in production environments.
+ * @param isDev Determines whether this is a development version or not
+ */
+export function _setDevRelease(isDev: boolean) {
+  IS_DEV = isDev;
+}
 
 /**
  * Represents a decompressor

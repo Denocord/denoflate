@@ -35,6 +35,12 @@ jobs:
               env:
                 RUST_BACKTRACE: 1
               run: cargo build --release
+
+            - name: Run tests
+              uses: Denocord/deno-action@master
+              with:
+                  args: ['["test", "--allow-read", "--allow-write", "--allow-plugin", "--allow-env", "--unstable", "test"]']
+
     build_wasm:
         name: Build for WASM
         runs-on: ubuntu-latest
@@ -75,3 +81,9 @@ jobs:
               with:
                   args: '["run", "--allow-read", "--allow-write", "dist-tools/pack-wasm.ts"]'
 
+            - name: Run tests
+              uses: Denocord/deno-action@master
+              with:
+                  args: ['["test", "--allow-read", "--allow-env", "--unstable", "test"]']
+              env:
+                  COMP_MODE: wasm
