@@ -85,10 +85,11 @@ export async function getDecompressor(
         },
         policy: IS_DEV ? Plug.CachePolicy.NONE : Plug.CachePolicy.STORE,
       });
-    } catch {
+    } catch (err) {
       console.warn(
         "Loading native plugin failed - falling back to WASM-based decompressor",
       );
+      if (IS_DEV) console.error(err);
       return await getDecompressor(true);
     }
 
