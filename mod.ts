@@ -1,4 +1,4 @@
-import { Plug } from "https://deno.land/x/plug@0.2.1/mod.ts";
+import { Plug } from "https://deno.land/x/plug@0.2.4/mod.ts";
 
 /**
  * The native plugin version
