@@ -52,8 +52,8 @@ if (init.startsWith(WASI_BINDGEN_IMPORT)) {
 import Context from "https://deno.land/std@0.72.0/wasi/snapshot_preview1.ts";
 
 const context = new Context({
-  args: Deno.args,
-  env: Deno.env,
+  args: [],
+  env: {}
 });
 
 const __wbg_star0 = context.exports;
