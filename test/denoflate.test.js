@@ -1,5 +1,5 @@
 import * as assert from "https://deno.land/std@0.75.0/testing/asserts.ts";
-import { getDecompressor, _setDevRelease } from "../mod.ts";
+import Decompressor, { getDecompressor, _setDevRelease } from "../mod.ts";
 
 const payload = await Deno.readFile(new URL("./payload0.bin", import.meta.url));
 
@@ -10,7 +10,7 @@ const DISCORD_HELLO_DECOMPRESSED = '{"t":null,"s":null,"op":10,"d":{"heartbeat_i
 
 _setDevRelease(true);
 
-const decompressor = await getDecompressor(IS_WASM);
+const decompressor = IS_WASM ? await getDecompressor(true) : Decompressor;
 const td = new TextDecoder;
 
 if (!IS_WASM) {
