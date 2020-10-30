@@ -36,10 +36,10 @@ jobs:
                 RUST_BACKTRACE: 1
               run: cargo build --release
 
-            - name: Run tests
-              uses: Denocord/deno-action@master
-              with:
-                  args: '["test", "--allow-read", "--allow-write", "--allow-plugin", "--allow-env", "--unstable", "test"]'
+              - uses: denolib/setup-deno@v2
+              - name: Run the tests
+                run: |
+                  deno test --allow-read --allow-write --allow-plugin --allow-env --unstable test
 
     build_wasm:
         name: Build for WASM

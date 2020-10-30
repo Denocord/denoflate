@@ -68,11 +68,10 @@ jobs:
                   STRIPOPTS="-x"
                 fi
                 strip $STRIPOPTS target/release/${{ matrix.config.filename }}
-
-            - name: Run tests
-              uses: Denocord/deno-action@master
-              with:
-                  args: '["test", "--allow-read", "--allow-write", "--allow-plugin", "--allow-env", "--unstable", "test"]'
+            - uses: denolib/setup-deno@v2
+            - name: Run the tests
+              run: |
+                deno test --allow-read --allow-write --allow-plugin --allow-env --unstable test
   
             - name: Upload Release Asset
               id: upload-release-asset 
