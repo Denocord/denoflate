@@ -2,7 +2,7 @@
 const WASI_BINDGEN_IMPORT =
   `import * as __wbg_star0 from 'wasi_snapshot_preview1';`;
 
-import { encode } from "https://deno.land/std@0.72.0/encoding/base64.ts";
+import { encode } from "https://deno.land/std@0.75.0/encoding/base64.ts";
 import Terser from "https://jspm.dev/terser@4.8.0";
 
 const name = "denoflate";
@@ -49,7 +49,7 @@ if (init.startsWith(WASI_BINDGEN_IMPORT)) {
   init = init.replace(
     WASI_BINDGEN_IMPORT,
     `
-import Context from "https://deno.land/std@0.72.0/wasi/snapshot_preview1.ts";
+import Context from "https://deno.land/std@0.75.0/wasi/snapshot_preview1.ts";
 
 const context = new Context({
   args: [],
