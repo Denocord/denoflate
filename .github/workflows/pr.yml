@@ -39,7 +39,7 @@ jobs:
             - name: Run tests
               uses: Denocord/deno-action@master
               with:
-                  args: ['["test", "--allow-read", "--allow-write", "--allow-plugin", "--allow-env", "--unstable", "test"]']
+                  args: '["test", "--allow-read", "--allow-write", "--allow-plugin", "--allow-env", "--unstable", "test"]'
 
     build_wasm:
         name: Build for WASM
@@ -84,6 +84,6 @@ jobs:
             - name: Run tests
               uses: Denocord/deno-action@master
               with:
-                  args: ['["test", "--allow-read", "--allow-env", "--unstable", "test"]']
+                  args: '["test", "--allow-read", "--allow-env", "--unstable", "test"]'
               env:
                   COMP_MODE: wasm
