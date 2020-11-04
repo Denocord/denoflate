@@ -41,6 +41,13 @@ jobs:
             - name: Run the tests
               run: |
                 deno test --allow-read --allow-write --allow-plugin --allow-env --unstable test
+            - uses: actions/upload-artifact@v2
+              with:
+                path: |
+                  target/release/libdenoflate.so
+                  target/release/denoflate.dll
+                  target/release/libdenoflate.dylib
+                if-no-files-found: ignore
 
     build_wasm:
         name: Build for WASM
@@ -88,3 +95,8 @@ jobs:
                   args: '["test", "--allow-read", "--allow-env", "--unstable", "test"]'
               env:
                   COMP_MODE: wasm
+            - uses: actions/upload-artifact@v2
+              with:
+                  path: |
+                    wasm.js
+                  if-no-files-found: ignore
