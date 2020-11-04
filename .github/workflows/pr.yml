@@ -37,17 +37,19 @@ jobs:
                 RUST_BACKTRACE: 1
               run: cargo build --release
 
-            - uses: denolib/setup-deno@v2
-            - name: Run the tests
-              run: |
-                deno test --allow-read --allow-write --allow-plugin --allow-env --unstable test
             - uses: actions/upload-artifact@v2
               with:
+                name: denoflate-${{ runner.os }}
                 path: |
                   target/release/libdenoflate.so
                   target/release/denoflate.dll
                   target/release/libdenoflate.dylib
                 if-no-files-found: ignore
+
+            - uses: denolib/setup-deno@v2
+            - name: Run the tests
+              run: |
+                deno test --allow-read --allow-write --allow-plugin --allow-env --unstable test
 
     build_wasm:
         name: Build for WASM
@@ -88,15 +90,15 @@ jobs:
               uses: Denocord/deno-action@master
               with:
                   args: '["run", "--allow-read", "--allow-write", "dist-tools/pack-wasm.ts"]'
-
+            - uses: actions/upload-artifact@v2
+              with:
+                  path: |
+                    wasm.js
+                  if-no-files-found: ignore
+                  name: denoflate-wasm
             - name: Run tests
               uses: Denocord/deno-action@master
               with:
                   args: '["test", "--allow-read", "--allow-env", "--unstable", "test"]'
               env:
                   COMP_MODE: wasm
-            - uses: actions/upload-artifact@v2
-              with:
-                  path: |
-                    wasm.js
-                  if-no-files-found: ignore
