@@ -30,10 +30,8 @@ fn flush(_: &mut dyn Interface, _: &mut [ZeroCopyBuf]) -> Op {
     let buf = DECOMPRESS.with(|d| {
         let mut writer = d.borrow_mut();
         writer.flush().unwrap();
-        let buf = writer.get_mut();
-        let cloned_buf = buf.clone();
-        buf.clear();
-        cloned_buf
+        let buf = std::mem::replace(writer.get_mut(), vec![]);
+        buf
     });
     Op::Sync(buf.into_boxed_slice())
 }
