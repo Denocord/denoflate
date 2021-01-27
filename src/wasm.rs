@@ -27,7 +27,6 @@ impl Decompressor {
 
     pub fn flush(&mut self) -> Vec<u8> {
         self.inflate.flush().unwrap();
-        let buf = std::mem::replace(self.inflate.get_mut(), vec![]);
-        buf
+        std::mem::replace(self.inflate.get_mut(), vec![])
     }
 }
