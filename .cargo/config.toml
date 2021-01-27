@@ -1,2 +1,2 @@
 [target.'cfg(target_arch = "wasm32")']
-rustflags = ["-C", "target-feature=+sign-ext,+bulk-memory,+nontrapping-fptoint"]
+rustflags = ["-C", "target-feature=+sign-ext,+bulk-memory,+nontrapping-fptoint,+simd128"]
